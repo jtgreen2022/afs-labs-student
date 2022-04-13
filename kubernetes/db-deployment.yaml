@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-deployment
+  name: db-deployment
   namespace: jgreen
   labels:
-    app: app
+    app: db
 spec:
   replicas: 1
   strategy:
@@ -12,17 +12,17 @@ spec:
   minReadySeconds: 20
   selector:
     matchLabels:
-      app: <APP>
+      app: db
   template:
     metadata:
       labels:
-        app: app
+        app: db
     spec:
       containers:
       - envFrom:
         - secretRef:
             name: db-secret
-        name: app-deployment
-        image: harbor.dev.afsmtddso.com/jgreen-harbor-project/app:971c881-48b13d7
+        name: db-deployment
+        image: harbor.dev.afsmtddso.com/jgreen-harbor-project/db@sha256:a57f094a13c8dbfcfac205c69be86690f8d7def4eb8840fe693aa89509c277d9
         ports:
-        - containerPort: 5000
+        - containerPort: 5432
